@@ -151,9 +151,7 @@
     <ClCompile Include="DEFIBRILLATORS.cpp" />
     <ClCompile Include="Puzzles.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="1D Spreadsheet.h" />
+    <ClCompile Include="Rock Paper Scissors Lizard Spock.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
