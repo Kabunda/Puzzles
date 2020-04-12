@@ -147,8 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="1D Spreadsheet.cpp" />
     <ClCompile Include="DEFIBRILLATORS.cpp" />
     <ClCompile Include="Puzzles.cpp" />
+    <ClCompile Include="HORSE-RACING DUALS.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
