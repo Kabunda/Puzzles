@@ -18,5 +18,8 @@
     <ClCompile Include="Puzzles.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="DEFIBRILLATORS.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
