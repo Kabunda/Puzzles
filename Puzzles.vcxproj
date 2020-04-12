@@ -152,6 +152,9 @@
     <ClCompile Include="Puzzles.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="1D Spreadsheet.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
