@@ -30,5 +30,8 @@
     <ClCompile Include="Rock Paper Scissors Lizard Spock.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Ghost Legs.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

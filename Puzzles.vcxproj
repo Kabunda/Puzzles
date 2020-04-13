@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="1D Spreadsheet.cpp" />
     <ClCompile Include="DEFIBRILLATORS.cpp" />
+    <ClCompile Include="Ghost Legs.cpp" />
     <ClCompile Include="Puzzles.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
     <ClCompile Include="Rock Paper Scissors Lizard Spock.cpp" />
