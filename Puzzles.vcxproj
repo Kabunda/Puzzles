@@ -151,10 +151,10 @@
     <ClCompile Include="ANEO.cpp" />
     <ClCompile Include="DEFIBRILLATORS.cpp" />
     <ClCompile Include="Ghost Legs.cpp" />
-    <ClCompile Include="Puzzles.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
     <ClCompile Include="Rock Paper Scissors Lizard Spock.cpp" />
     <ClCompile Include="There is no Spoon - Episode 1.cpp" />
+    <ClCompile Include="There is no Spoon - Episode 2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
