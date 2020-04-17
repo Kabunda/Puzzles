@@ -6,41 +6,32 @@
 using namespace std;
 int width; // the number of cells on the X axis
 int height; // the number of cells on the Y axis
-/**
- * The machines are gaining ground. Time to show them what we're really made of...
- **/
 
 class Point
 {
 public:
 	Point()
 	{
+		Point('.');
 	}
 	Point(char s)
 	{
-		if (s == '.') {
-			value = 0;
-			paint = 0;
+		if (s == '.') {		
+			remain = 0; paint = 0;
 		}
 		else {
-			value = s - 48;
-			paint = 55;
+			remain = s - 48; paint = 3;
 		}
-		remain = value;
-		if (value == 1) {
-			up = 1; down = 1; left = 1; right = 1;
-		}
-		else {
+		if (remain >= 2){
 			up = 2; down = 2; left = 2; right = 2;
 		}
+		else{
+			up = remain; down = remain; left = remain; right = remain; 
+		}
 	}
-	~Point()
+	bool getCell()
 	{
-
-	}
-	bool Cell()
-	{
-		if (paint == 55)
+		if (paint == 3)
 			return true;
 		else
 			return false;
@@ -49,47 +40,90 @@ public:
 	{
 		return to_string(remain);
 	}
-	bool gorizont()
+	bool getGoriz()
 	{
-		if (paint == 33 or paint == 44)
+		if (paint == 2)
 			return true;
 		return false;
 	}
-	bool vertikal()
+	bool getVert()
 	{
-		if (paint == 11 or paint == 22)
+		if (paint == 1)
 			return true;
 		return false;
 	}
-	void PaintCell(string naprav)
+	void setGoriz()
 	{
-		if (naprav == "gor") paint = 33;
-		if (naprav == "ver") paint = 11;
+		paint = 2;
 	}
-	void Connect(string ns, int nl)
+	void setVert()
 	{
-		if (ns == "up") up = up - nl;
-		if (ns == "down") down = down - nl;
-		if (ns == "left") left = left - nl;
-		if (ns == "right") right = right - nl;
-		remain = remain - nl;
-		if (remain == 0) {
-			up = 0; down = 0; left = 0; right = 0;
-		}
+		paint = 1;
 	}
+	void setConnectUp(int NumberOfLinks)
+	{
+		up = up - NumberOfLinks;
+		CalculNRem(NumberOfLinks);
+	}
+	void setConnectDown(int NumberOfLinks)
+	{
+		down = down - NumberOfLinks;
+		CalculNRem(NumberOfLinks);
+	}
+	void setConnectLeft(int NumberOfLinks)
+	{
+		left = left - NumberOfLinks;
+		CalculNRem(NumberOfLinks);
+	}
+	void setConnectRight(int NumberOfLinks)
+	{
+		right = right - NumberOfLinks;
+		CalculNRem(NumberOfLinks);
+	}
+	int connecterUp()
+	{
+		return up;
+	}
+	int connecterDown()
+	{
+		return down;
+	}
+	int connecterLeft()
+	{
+		return left;
+	}
+	int connecterRight()
+	{
+		return right;
+	}
+	int getRemain()
+	{
+		return remain;
+	}
+private:
 	int up;
 	int down;
 	int left;
 	int right;
 	int remain; // остаток неиспользованных связей
-	char value;  // ячейка со значением
-	int paint; // преграда для расчетов (false пусто, true занято)
-				// paint -  11 - вертикальная
-				//          22 - две вертикальные
-				//          33 - горизонтальная
-				//          44 - две горизонтальные
-				//          55 - узел
+	int paint; // 
+				// paint -  1 - вертикальная
+				//          2 - горизонтальная 
+				//          3 - узел
 				//          0 - чистая
+	void CalculNRem(int NumberOfLinks = 0)
+	{
+		remain = remain - NumberOfLinks;
+		if (remain == 0) {
+			up = 0; down = 0; left = 0; right = 0;
+		}
+		if (remain == 1) {
+			if (up > 1) up = 1;
+			if (down > 1) down = 1;
+			if (left > 1) left = 1;
+			if (right > 1) right = 1;
+		}
+	}
 };
 Point grid[30][30];
 class Begunok
@@ -106,28 +140,28 @@ public:
 	{
 		x = xx;
 		y = yy;
-		up = grid[x][y].up;
-		down = grid[x][y].down;
-		left = grid[x][y].left;
-		right = grid[x][y].right;
-		remain = grid[x][y].remain;
+		up = grid[x][y].connecterUp();
+		down = grid[x][y].connecterDown();
+		left = grid[x][y].connecterLeft();
+		right = grid[x][y].connecterRight();
+		remain = grid[x][y].getRemain();
 	}
 
-	bool Run()
+	bool Run(int exp)
 	{
-		// 1 обновляем коннекторы
+	// 1 обновляем коннекторы
 		if (up > 0) up = goUp();
 		if (down > 0) down = goDown();
 		if (left > 0) left = goLeft();
 		if (right > 0) right = goRight();
-		cerr << '[' << x << ':' << y << ']' << '\t';
+	/*	cerr << '[' << x << ':' << y << ']' << '\t';
 		cerr << '(' << remain << ')' << 't';
 		cerr << 'U' << up << 'D' << down << 'L' << left << 'R' << right << endl;
-		// 2 проверяем однозначность хода
-		if (remain == (up + down + left + right)) {
-			DrawAll(1);
-			return true;
-		}
+	*/
+	// распеределенную ячейку не трогаем
+		if (remain == 0) return false;
+	// 2 проверяем однозначность хода	
+
 		if ((remain == 1) and (numWays() == 1)) {
 			DrawAll(1);
 			return true;
@@ -153,6 +187,10 @@ public:
 			return true;
 		}
 		return false;
+		if (remain == (up + down + left + right)) {
+			DrawAll(1);
+			return true;
+		}
 	}
 	int numWays()
 	{
@@ -178,88 +216,88 @@ private:
 	int goUp()
 	{
 		for (int i = y - 1; i >= 0; i--) {
-			if (grid[x][i].gorizont() == true) return 0;
-			if (grid[x][i].Cell() == true) return grid[x][i].down;
+			if (grid[x][i].getGoriz() == true) return 0;
+			if (grid[x][i].getCell() == true) return grid[x][i].connecterDown();
 		}
 		return 0;
 	}
 	int goDown()
 	{
 		for (int i = y + 1; i < height ; i++) {
-			if (grid[x][i].gorizont() == true) return 0;
-			if (grid[x][i].Cell() == true) return grid[x][i].up;
+			if (grid[x][i].getGoriz() == true) return 0;
+			if (grid[x][i].getCell() == true) return grid[x][i].connecterUp();
 		}
 		return 0;
 	}
 	int goLeft()
 	{
 		for (int i = x - 1; i >= 0; i--) {
-			if (grid[i][y].vertikal() == true) return 0;
-			if (grid[i][y].Cell() == true) return grid[i][y].right;
+			if (grid[i][y].getVert() == true) return 0;
+			if (grid[i][y].getCell() == true) return grid[i][y].connecterRight();
 		}
 		return 0;
 	}
 	int goRight()
 	{
 		for (int i = x + 1; i < width; i++) {
-			if (grid[i][y].vertikal() == true) return 0;
-			if (grid[i][y].Cell() == true) return grid[i][y].left;
+			if (grid[i][y].getVert() == true) return 0;
+			if (grid[i][y].getCell() == true) return grid[i][y].connecterLeft();
 		}
 		return 0;
 	}
 	void drawUp(int NumberOfLinks)
 	{
-		grid[x][y].Connect("up", NumberOfLinks);
+		grid[x][y].setConnectUp(NumberOfLinks);
 		for (int i = y - 1; i >= 0; i--) {
-			if (grid[x][i].Cell() == true) {
-				grid[x][i].Connect("down", NumberOfLinks);
+			if (grid[x][i].getCell() == true) {
+				grid[x][i].setConnectDown(NumberOfLinks);
 				PrintAnswer(x, i, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[x][i].PaintCell("ver");
+				grid[x][i].setVert();
 			}
 		}
 	}
 	void drawDown(int NumberOfLinks)
 	{
-		grid[x][y].Connect("down", NumberOfLinks);
+		grid[x][y].setConnectDown(NumberOfLinks);
 		for (int i = y + 1; i < height; i++) {
-			if (grid[x][i].Cell() == true) {
-				grid[x][i].Connect("up", NumberOfLinks);
+			if (grid[x][i].getCell() == true) {
+				grid[x][i].setConnectUp(NumberOfLinks);
 				PrintAnswer(x, i, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[x][i].PaintCell("ver");
+				grid[x][i].setVert();
 			}
 		}
 	}
 	void drawLeft(int NumberOfLinks)
 	{
-		grid[x][y].Connect("left", NumberOfLinks);
+		grid[x][y].setConnectLeft(NumberOfLinks);
 		for (int i = x - 1; i >= 0; i--) {
-			if (grid[i][y].Cell() == true) {
-				grid[i][y].Connect("right", NumberOfLinks);
+			if (grid[i][y].getCell() == true) {
+				grid[i][y].setConnectRight(NumberOfLinks);
 				PrintAnswer(i, y, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[i][y].PaintCell("gor");
+				grid[i][y].setGoriz();
 			}
 		}
 	}
 	void drawRight(int NumberOfLinks)
 	{
-		grid[x][y].Connect("right", NumberOfLinks);
+		grid[x][y].setConnectRight(NumberOfLinks);
 		for (int i = x + 1; i < width; i++) {
-			if (grid[i][y].Cell() == true) {
-				grid[i][y].Connect("left", NumberOfLinks);
+			if (grid[i][y].getCell() == true) {
+				grid[i][y].setConnectLeft(NumberOfLinks);
 				PrintAnswer(i, y, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[i][y].PaintCell("gor");
+				grid[i][y].setGoriz();
 			}
 		}
 	}
@@ -283,22 +321,20 @@ int main()
 		cerr << '\n';
 	}
 	*/
-	bool changes;
-	int count = 0;
-	do
-	{
-		count++;
-		changes = false;
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				if (grid[j][i].Cell() ==true) {
-					Begunok t(j, i);
-					if (t.Run()==true) changes = true;
+	for (int exp = 0; exp < 2; exp++) {
+		bool changes;
+		do
+		{
+			changes = false;
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j < width; j++) {
+					if (grid[j][i].getCell() == true) {
+						Begunok t(j, i);
+						if (t.Run(exp) == true) changes = true;
+					}
 				}
 			}
-		}
-		cerr << "Count " << count<<endl;
-	} while (changes == true);
-	cout << "Options are finished" << endl;
+		} while (changes == true);
+	}
 	// работы по отрисовке ненадежных связей
 }
