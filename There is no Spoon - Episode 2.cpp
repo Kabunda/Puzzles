@@ -38,7 +38,10 @@ public:
 	}
 	string PrintP()
 	{
-		return to_string(remain);
+		string s = to_string(remain);
+		if (getVert()) s = "|";
+		if (getGoriz()) s = "-";
+		return s;
 	}
 	bool getGoriz()
 	{
@@ -125,8 +128,36 @@ private:
 		}
 	}
 };
-Point grid[30][30];
-class Begunok
+//Point grid[30][30];
+class FieldGrid
+{
+public:
+	FieldGrid()
+	{
+		
+	}
+	~FieldGrid() 
+	{
+
+	}
+	void setLine(string Line,int numLine)
+	{
+		for (int i = 0; i < width; i++)
+			m[i][numLine] = { Line[i] };
+	}
+	void PrintField()
+	{
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				cerr << m[j][i].PrintP() << ' ';
+			}
+			cerr << '\n';
+		}
+	}
+	Point m[30][30];
+};
+
+class Begunok:FieldGrid
 {
 	int x;
 	int y;
@@ -140,11 +171,11 @@ public:
 	{
 		x = xx;
 		y = yy;
-		up = grid[x][y].connecterUp();
-		down = grid[x][y].connecterDown();
-		left = grid[x][y].connecterLeft();
-		right = grid[x][y].connecterRight();
-		remain = grid[x][y].getRemain();
+		up = m[x][y].connecterUp();
+		down = m[x][y].connecterDown();
+		left = m[x][y].connecterLeft();
+		right = m[x][y].connecterRight();
+		remain = m[x][y].getRemain();
 	}
 
 	bool Run(int exp)
@@ -216,88 +247,88 @@ private:
 	int goUp()
 	{
 		for (int i = y - 1; i >= 0; i--) {
-			if (grid[x][i].getGoriz() == true) return 0;
-			if (grid[x][i].getCell() == true) return grid[x][i].connecterDown();
+			if (m[x][i].getGoriz() == true) return 0;
+			if (m[x][i].getCell() == true) return m[x][i].connecterDown();
 		}
 		return 0;
 	}
 	int goDown()
 	{
 		for (int i = y + 1; i < height ; i++) {
-			if (grid[x][i].getGoriz() == true) return 0;
-			if (grid[x][i].getCell() == true) return grid[x][i].connecterUp();
+			if (m[x][i].getGoriz() == true) return 0;
+			if (m[x][i].getCell() == true) return m[x][i].connecterUp();
 		}
 		return 0;
 	}
 	int goLeft()
 	{
 		for (int i = x - 1; i >= 0; i--) {
-			if (grid[i][y].getVert() == true) return 0;
-			if (grid[i][y].getCell() == true) return grid[i][y].connecterRight();
+			if (m[i][y].getVert() == true) return 0;
+			if (m[i][y].getCell() == true) return m[i][y].connecterRight();
 		}
 		return 0;
 	}
 	int goRight()
 	{
 		for (int i = x + 1; i < width; i++) {
-			if (grid[i][y].getVert() == true) return 0;
-			if (grid[i][y].getCell() == true) return grid[i][y].connecterLeft();
+			if (m[i][y].getVert() == true) return 0;
+			if (m[i][y].getCell() == true) return m[i][y].connecterLeft();
 		}
 		return 0;
 	}
 	void drawUp(int NumberOfLinks)
 	{
-		grid[x][y].setConnectUp(NumberOfLinks);
+		m[x][y].setConnectUp(NumberOfLinks);
 		for (int i = y - 1; i >= 0; i--) {
-			if (grid[x][i].getCell() == true) {
-				grid[x][i].setConnectDown(NumberOfLinks);
+			if (m[x][i].getCell() == true) {
+				m[x][i].setConnectDown(NumberOfLinks);
 				PrintAnswer(x, i, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[x][i].setVert();
+				m[x][i].setVert();
 			}
 		}
 	}
 	void drawDown(int NumberOfLinks)
 	{
-		grid[x][y].setConnectDown(NumberOfLinks);
+		m[x][y].setConnectDown(NumberOfLinks);
 		for (int i = y + 1; i < height; i++) {
-			if (grid[x][i].getCell() == true) {
-				grid[x][i].setConnectUp(NumberOfLinks);
+			if (m[x][i].getCell() == true) {
+				m[x][i].setConnectUp(NumberOfLinks);
 				PrintAnswer(x, i, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[x][i].setVert();
+				m[x][i].setVert();
 			}
 		}
 	}
 	void drawLeft(int NumberOfLinks)
 	{
-		grid[x][y].setConnectLeft(NumberOfLinks);
+		m[x][y].setConnectLeft(NumberOfLinks);
 		for (int i = x - 1; i >= 0; i--) {
-			if (grid[i][y].getCell() == true) {
-				grid[i][y].setConnectRight(NumberOfLinks);
+			if (m[i][y].getCell() == true) {
+				m[i][y].setConnectRight(NumberOfLinks);
 				PrintAnswer(i, y, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[i][y].setGoriz();
+				m[i][y].setGoriz();
 			}
 		}
 	}
 	void drawRight(int NumberOfLinks)
 	{
-		grid[x][y].setConnectRight(NumberOfLinks);
+		m[x][y].setConnectRight(NumberOfLinks);
 		for (int i = x + 1; i < width; i++) {
-			if (grid[i][y].getCell() == true) {
-				grid[i][y].setConnectLeft(NumberOfLinks);
+			if (m[i][y].getCell() == true) {
+				m[i][y].setConnectLeft(NumberOfLinks);
 				PrintAnswer(i, y, NumberOfLinks);
 				return;
 			}
 			else {
-				grid[i][y].setGoriz();
+				m[i][y].setGoriz();
 			}
 		}
 	}
@@ -306,21 +337,16 @@ int main()
 {
 	cin >> width; cin.ignore();
 	cin >> height; cin.ignore();
+	FieldGrid osn;
 	for (int i = 0; i < height; i++) {
 		string line;
 		getline(cin, line); // width characters, each either a number or a '.'
-		for (int j = 0; j < width; j++) {
-				grid[j][i] = { line[j] };
-		}
+		osn.setLine(line, i);
 	}
-	/* тестовый вывод карты поля
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			cerr << grid[j][i].PrintP() << ' ';
-		}
-		cerr << '\n';
-	}
-	*/
+
+	// технический вывод
+	osn.PrintField();
+
 	for (int exp = 0; exp < 2; exp++) {
 		bool changes;
 		do
@@ -328,7 +354,7 @@ int main()
 			changes = false;
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
-					if (grid[j][i].getCell() == true) {
+					if (osn.m[j][i].getCell() == true) {
 						Begunok t(j, i);
 						if (t.Run(exp) == true) changes = true;
 					}
