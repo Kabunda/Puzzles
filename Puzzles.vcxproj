@@ -152,6 +152,7 @@
     <ClCompile Include="DEFIBRILLATORS.cpp" />
     <ClCompile Include="Ghost Legs.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
+    <ClCompile Include="Lumen.cpp" />
     <ClCompile Include="Rock Paper Scissors Lizard Spock.cpp" />
     <ClCompile Include="Enigma.cpp" />
     <ClCompile Include="Shadows of the Knight - Episode 1.cpp" />
