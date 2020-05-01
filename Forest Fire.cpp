@@ -4,7 +4,7 @@
 #include <algorithm>
 
 using namespace std;
-int L;// Size of forest map
+
 class Plan
 { 
     int N;      // оставшийся огонь
@@ -39,27 +39,20 @@ class Plan
 public:
     Plan(int size, int wat, int fires = 0)
     {
-        L = size;
-        water = wat;
-        N = fires;
+        L = size;        water = wat;        N = fires;
     }
     void SetFire(int x, int y)
     {
-        m[y][x] = true;
-        N++;
+        m[y][x] = true;        N++;
     }
     bool Braise(int x1 = 0, int y1 = 0)
     {
+        if (N == 0) return true;
         for (int i = y1; i < L; i++)
             for (int j = x1; j < L; j++) {
                 if (CountFire(j, i, 1) == 1 and water >= 600) {
                     Plan t = *this;
                     t.BraiseFire(j, i, 1);
-                    if (t.N <= 0) {
-                        Answer(j, i, 'J');
-                        return true;
-                    }
-
                     if (t.Braise(j, i) == true) {
                         Answer(j, i, 'J');
                         return true;
@@ -68,11 +61,6 @@ public:
                 if (CountFire(j, i, 2) >= 3 and water >= 1200) {
                     Plan t = *this;
                     t.BraiseFire(j, i, 2);
-                    if (t.N <= 0) {
-                        Answer(j, i, 'H');
-                        return true;
-                    }
-
                     if (t.Braise(j, i) == true) {
                         Answer(j, i, 'H');
                         return true;
@@ -81,11 +69,6 @@ public:
                 if (CountFire(j, i, 3) >= 4 and water >= 2100) {
                     Plan t = *this;
                     t.BraiseFire(j, i, 3);
-                    if (t.N <= 0) {
-                        Answer(j, i, 'C');
-                        return true;
-                    }
-
                     if (t.Braise(j, i) == true) {
                         Answer(j, i, 'C');
                         return true;
@@ -94,23 +77,11 @@ public:
             }
         return false;
     }
-    void Print()
-    {
-        cerr << "Size: " << L << "\tWater: " << water << "\tFire: " << N << endl << endl;
-        for (int i = 0; i < L; i++) {
-            for (int j = 0; j < L; j++)
-                if (m[i][j] == true)
-                    cerr << "& ";
-                else cerr << "- ";
-            cerr << endl;
-        }
-        cerr << "^^^" << endl;
-    }
 };
 
 int main()
 {
-    //int L; // Size of forest map
+    int L; // Size of forest map
     cin >> L; cin.ignore();
     int water; // Total amount of water available
     cin >> water; cin.ignore();
