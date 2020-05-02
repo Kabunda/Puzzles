@@ -150,6 +150,7 @@
     <ClCompile Include="1D Spreadsheet.cpp" />
     <ClCompile Include="ANEO.cpp" />
     <ClCompile Include="DEFIBRILLATORS.cpp" />
+    <ClCompile Include="Dynamic sorting.cpp" />
     <ClCompile Include="Forest Fire.cpp" />
     <ClCompile Include="Ghost Legs.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
