@@ -63,5 +63,8 @@
     <ClCompile Include="Dynamic sorting.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Don%27t Panic - Episode 1.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
