@@ -151,6 +151,7 @@
     <ClCompile Include="ANEO.cpp" />
     <ClCompile Include="DEFIBRILLATORS.cpp" />
     <ClCompile Include="Don%27t Panic - Episode 1.cpp" />
+    <ClCompile Include="Don%27t Panic - Episode 2.cpp" />
     <ClCompile Include="Dynamic sorting.cpp" />
     <ClCompile Include="Forest Fire.cpp" />
     <ClCompile Include="Ghost Legs.cpp" />
