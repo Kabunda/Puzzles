@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="1D Spreadsheet.cpp" />
     <ClCompile Include="ANEO.cpp" />
+    <ClCompile Include="Bender - Episode 1.cpp" />
     <ClCompile Include="DEFIBRILLATORS.cpp" />
     <ClCompile Include="Don%27t Panic - Episode 1.cpp" />
     <ClCompile Include="Don%27t Panic - Episode 2.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Ghost Legs.cpp" />
     <ClCompile Include="HORSE-RACING DUALS.cpp" />
     <ClCompile Include="Lumen.cpp" />
+    <ClCompile Include="Mars Lander - Episode 1.cpp" />
     <ClCompile Include="Rectangle Partition.cpp" />
     <ClCompile Include="Rock Paper Scissors Lizard Spock.cpp" />
     <ClCompile Include="Enigma.cpp" />
