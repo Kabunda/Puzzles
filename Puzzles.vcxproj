@@ -164,6 +164,7 @@
     <ClCompile Include="Enigma.cpp" />
     <ClCompile Include="Shadows of the Knight - Episode 1.cpp" />
     <ClCompile Include="Shadows of the Knight - Episode 2.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="There is no Spoon - Episode 1.cpp" />
     <ClCompile Include="There is no Spoon - Episode 2.cpp" />
     <ClCompile Include="Van Eck%27s sequence.cpp" />
